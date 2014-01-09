@@ -1,0 +1,42 @@
+#==============================================================================
+set my_pw_myserv_imap         = `gpg-wallet myserv_imap jacob`
+set my_pw_myserv_smtp         = `gpg-wallet myserv_smtp jacob`
+set imap_user               = jacob
+set imap_pass               = $my_pw_myserv_imap
+set imap_authenticators     = "login"
+unset folder
+set folder                  = imaps://myserv.net/
+unset spoolfile
+set spoolfile               = +Inbox
+unset postponed
+set postponed               = +Drafts
+set record                  = +Sent
+set imap_check_subscribed
+unset imap_passive
+set imap_keepalive          = 300
+set mail_check              = 600
+set rfc2047_parameters      = yes
+set reverse_realname        = yes
+#------------------------------------------------------------------------------
+set realname                = 'jacob appelbaum'
+set from                    = 'jcob@myserv.net'
+set my_username             = 'jacob'
+set smtp_pass               = $my_pw_myserv_smtp
+set hostname                = myserv.net
+set use_from                = yes
+set signature               = /home/hacker/.mutt/.signature
+set sig_dashes              = no
+set sig_on_top              = yes
+set send_charset="utf-8"
+set reply_to                = yes
+unset pgp_sign_as
+set pgp_sign_as             = 1234567807654321
+unmy_hdr *
+my_hdr OpenPGP: id=1234567807654321123456780765432112345678
+unset hdrs
+set hdrs                    = yes
+set smtp_authenticators     = "cram-md5"
+set smtp_url                = smtps://$my_username:$smtp_pass@myserv.net
+#------------------------------------------------------------------------------
+account-hook $folder "set imap_user=$my_username imap_pass=$my_pw_myserv_imap"
+#==============================================================================

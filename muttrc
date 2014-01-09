@@ -1,0 +1,89 @@
+source /home/hacker/.mutt/jellybeans.ansi
+#
+set header_cache              = /home/hacker/.mutt/cache/header
+set message_cachedir          = /home/hacker/.mutt/cache/message
+set mailcap_path              = ~/.mutt/mailcap
+set attribution               = "%d, %n wrote:"
+#
+#auto_view text/html
+#alternative_order text/plain text/html
+#
+set mbox_type                 = Maildir
+set sort                      = reverse-date-sent
+set pager_index_lines         = 7
+set edit_headers              = no
+set use_from                  = yes
+set use_envelope_from         = yes
+set editor                    = "vim -c start"
+set visual                    = vim
+set user_agent                = no
+set use_domain                = no
+set pager_stop
+#set arrow_cursor
+set copy                      = yes
+set status_on_top             = yes
+set strict_threads            = yes
+set menu_context              = 1
+set text_flowed               = yes
+set sleep_time                = 0
+set allow_ansi                = no
+set ascii_chars               = yes
+#------------------------------------------------------------------------------
+source /etc/Muttrc.gpg.dist
+set pgp_autoinline            = no
+set pgp_mime_auto             = yes
+set pgp_use_gpg_agent         = yes
+set pgp_long_ids              = yes
+set crypt_autosign            = yes
+set crypt_replysignencrypted  = yes
+set pgp_timeout               = 600
+set crypt_verify_sig          = yes
+bind compose p  pgp-menu
+macro compose Y pfy "send mail without GPG"
+#------------------------------------------------------------------------------
+set ssl_force_tls           = yes
+set ssl_use_tlsv1_2         = yes
+set ssl_use_tlsv1_1         = no
+#set ssl_use_tlsv1           = yes
+set ssl_use_sslv3           = no
+set ssl_use_sslv2           = no
+set ssl_verify_host         = yes
+set ssl_usesystemcerts      = yes
+set ssl_verify_dates        = yes
+#------------------------------------------------------------------------------
+set sidebar_indentstr       = " "
+set sidebar_delim           = ∵
+set sidebar_visible         = yes
+set sidebar_sort            = yes
+set sidebar_shortpath       = yes
+set sidebar_width           = 18
+# Syntax error with this
+#set sidebar_format        = “%B%?F? [%F]?%* %?N?%N/?%4S”
+set sidebar_folderindent    = yes
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+# Ctrl-n, Ctrl-p to select next, previous folder.
+# Ctrl-o to open selected folder.
+# - EDIT: now 'should be' Shift P, N, and O
+bind index,pager P sidebar-prev
+bind index,pager N sidebar-next
+bind index,pager O sidebar-open
+#------------------------------------------------------------------------------
+## Abook
+#set query_command= "abook --mutt-query '%s'"
+#macro index,pager  a "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
+#bind editor        <Tab> complete-query
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## pyCardDav
+set query_command= "pc_query -m '%s'"
+macro index,pager A "<pipe-message>pycard-import<enter>" "add sender address to pycardsyncer"
+bind editor        <Tab> complete-query
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+source /home/hacker/.mutt/google.hosted.net
+folder-hook $folder 'source ~/.mutt/google.hosted.com'
+macro index,pager <f5> '<sync-mailbox><enter-command>source ~/.mutt/google.hosted.com<enter><change-folder>!<enter>'
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+source /home/hacker/.mutt/tomd.tel
+folder-hook $folder 'source ~/.mutt/myserv.net'
+macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.mutt/myserv.tel<enter><change-folder>!<enter>'
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
